@@ -14,7 +14,7 @@ let malasDecisiones = 0;
 let puntajeUser = 0;
 let puntajeTotal = 0;
 
-// let objetos
+// let objetos 
 
 const confirmacion = (funcion) => {
     click = true;
@@ -24,32 +24,38 @@ const confirmacion = (funcion) => {
 }
 
 
-const guardarUsuario = (valorNombre) =>{
-    let nombreUsuario = valorNombre
-    sessionStorage.setItem("nombre", nombreUsuario)
+const guardarUsuario = function(valorNombre){
+    sessionStorage.setItem("nombre", valorNombre)
 
 
-    const usuario = {
-        nombre: nombreUsuario,
-        puntaje: puntajeUser,
+    let usuario = {
+        nombre : valorNombre,
+        puntaje : 0,
         inventario: ""
     }
     
     const usuarioJSON = JSON.stringify(usuario);
 
-    localStorage.setItem(`${nombreUsuario}`, usuarioJSON );
+    localStorage.setItem(`${valorNombre}`, usuarioJSON );
 
 } 
 
 const guardarResultado = function(numeroDesafio, valorResultado){
-    
     sessionStorage.setItem(`${numeroDesafio}`, valorResultado)
 }
 
-const siguienteBasico = (funcion) =>{ 
-    siguienteBasico.addEventListener("click", () =>{ 
-    funcion
-});
+
+const sumarPuntos = (puntos) => {
+    let nombre = sessionStorage.getItem("nombre")
+    let usuarioJSON = localStorage.getItem(nombre)
+    let usuario = JSON.parse(usuarioJSON)
+    console.log(sumarPuntos)
+    if (usuario.puntaje === null || isNaN(usuario.puntaje)) {
+        localStorage.setItem("puntaje", puntos.toString());
+    } else {
+        usuario.puntaje += puntos; 
+        localStorage.setItem(nombre, JSON.stringify(usuario));
+    }
 }
 
 const nombreAventurero = () => {
@@ -91,29 +97,29 @@ const nombreAventurero = () => {
     
 }
 
-nombreAventurero()
+
 
 const primerDesafio = (respuestaPrimerDesafio) => {
     
     nombreUsuarioSession = sessionStorage.getItem("nombre");
     
-    divPrincipal.innerHTML = `
-    <h2>Primer capitulo<h2>
+    divPrincipal.innerHTML = `<div id="seccion">
+    <h2>Primer capitulo</h2>
     <p>
-        ${nombreUsuarioSession} tras salir de su hogar en busca de desafios se adentro en un bosque donde a la hora de caminata se encuentra tres caminos </p> 
+        ${nombreUsuarioSession} tras salir de su hogar en busca de desafios se adentro en un bosque donde a la hora de caminata se encuentra tres caminos 
+        </p>
         <ol>
         <li>En el camino de la derecha se en cuentra un leon muerto de hambre</li> 
         <li>En el camino del medio hay un camino lleno de plantas venenozas</li> 
         <li>En el camino de la izquierda se encuentra custodiado por tres golems</li>
         </ol>
 
-    <div>
         <form id="respuestasFormUno">
             <fielset>
                 <span>¿Que camino deberia tomar?</span>
 
                 <div>
-                    <input type="radio" name="respuestaDesUno" id="respuestaUno" value="1" checked>
+                    <input type="radio" name="respuestaDesUno" id="respuestaUno" value="1">
                     <label for="respuestaUno">1</label>
                     <input type="radio" name="respuestaDesUno" id="respuestaDos" value="2">
                     <label for="respuestaDos">2</label>
@@ -145,94 +151,170 @@ const primerDesafio = (respuestaPrimerDesafio) => {
         
         if(resultadoDesUnoSS == 1){
             divPrincipal.innerHTML=`
-            <div>
+            <div id="seccion">
+            <p>
                 ${nombreUsuarioSession} avanza por el camino de la derecha se encuentra al leon muerto de hambre y como estaba muerto pasa tranquilamente \n ganas 50 puntos    
-            </div>
+            </p>
+            
             <button id="siguienteBasico">
                 siguiente
-            </button>`
+            </button>
+            </div>`
 
             const siguienteBasico = document.getElementById("siguienteBasico")
 
             buenasDecisiones++;
             puntajeTotal += 50;
             puntajeUser += 50;
+            sumarPuntos(50)
+
             siguienteBasico.addEventListener("click", () =>{
                 final()
             })
             
         }else if(resultadoDesUnoSS == 2){
-            divPrincipal.innerHTML=`${nombreUsuarioSession} avanza por el camino del medio intentando evitar las plantas pero se descuida y respira las esporas venenozas, y asi termina MURIENDO`;
             vidas--;
             malasDecisiones++;
-        }else if(resultadoDesUnoSS == 3){
-            divPrincipal.innerHTML=`<div>${nombreUsuarioSession} avanza por el camino de la izquierda enfrentandose a los tres golems y como no tenia armas, y asi termina MURIENDO</div>`;
-            vidas--;
-            malasDecisiones++;
-        }
+            divPrincipal.innerHTML=`<div id="seccion"><p>${nombreUsuarioSession} avanza por el camino de la izquierda enfrentandose a los tres golems y como no tenia armas, y asi termina MURIENDO</p>
+                        <button id="resultado">
+                            Siguiente
+                        </button>
+                        </div>`;
 
-    })
+            const resultadosBoton = document.getElementById("resultado")
+            resultadosBoton.addEventListener("click", () =>{
+            if(vidas == 0){
+            
+                resultado()
+            
+
+            }else{
+                divPrincipal.innerHTML=`<div id="seccion"><p>${nombreUsuarioSession} al tener la pocion consigue sobrevivir</p>
+                <button id="siguiente">
+                    Siguiente
+                </button>`
+                const siguiente = document.getElementById("siguiente")
+                siguiente.addEventListener("click", () => {
+                    tienda()
+                })
+            }
+        })
+
+        }else if(resultadoDesUnoSS == 3){
+            vidas--;
+            malasDecisiones++;
+            divPrincipal.innerHTML=`<div id="seccion"><p>${nombreUsuarioSession} avanza por el camino de la izquierda enfrentandose a los tres golems y como no tenia armas, y asi termina MURIENDO</p>
+            <button id="siguiente">
+                Siguiente
+            </button>
+            </div>`;
+            const siguienteBoton = document.getElementById("siguiente")
+            siguienteBoton.addEventListener("click", () =>{
+            if(vidas == 0){
+                resultado()
+            }else{
+                divPrincipal.innerHTML=`<div id="seccion"><p>${nombreUsuarioSession} al tener la pocion consigue sobrevivir</p>
+                    <button id="siguiente">
+                        Siguiente
+                    </button>`
+                const siguiente = document.getElementById("siguiente")
+                siguiente.addEventListener("click", () => {
+                    tienda()
+                })
+            }
+
+        });
+    }
     
+})
 }
 
 const tienda = () => {
     const objetos = [
         {pin: 1, nombre:"Amuleto", precio: 80, informacion: "aumenta la cantidad de puntos obtenidos"},
-        {pin: 2, nombre: "Pocion", precio: 100, informacion:"1HP"}
+        {pin: 2, nombre: "Pocion", precio: 100, informacion:"1HP"},
+        {pin: 3, nombre: "Espada", precio: 150, informacion:"te permite pasar sobre los desafios donde el camino es evitado por monstruos lv1"}
     ];
     
-    const mostrarobjetos = () => {
-        let tiendaconsola = "Los objetos son los siguientes:\n";
+    
+    divPrincipal.innerHTML=`
+            <span class="puntaje">Puntaje: ${puntajeUser}</span> <p>Que objetos quieres comprar con los puntos obtenidos:</p> 
+            <ol id="textoObjetos"></ol> Elige un objeto:
+            <div id="inputObjetos" class="objetos">
+            </div> 
+            <button id="comprar">Comprar</button>
+            <button id="salir">SALIR</button>
+        `;
+
+    const textoObjetos = document.getElementById("textoObjetos")
+    const inputObjetos = document.getElementById("inputObjetos")
+
+    const mostrarObjetos = () => {
         for(i = 0; i < objetos.length; i++){
-            tiendaconsola += `${i}- ${objetos[i].nombre} - ${objetos[i].precio}PTS - ${objetos[i].informacion}\n`
+            textoObjetos.innerHTML += `<li>${objetos[i].nombre} - ${objetos[i].precio}PTS - ${objetos[i].informacion}</li>`
         }
-        console.table(tiendaconsola)
+
+        for(i = 0; i < objetos.length; i++){
+            inputObjetos.innerHTML += `<input type="radio" name="objetoRadio" id="respuesta ${i + 1}" value="${objetos[i].nombre}" checked>
+                                        <label for="respuesta ${i + 1}"> ${i + 1} </label>`
+        }
+        
+    }
+    mostrarObjetos()
+    
+    // const guardarCompra = function(numeroDesafio, valorResultado){
+    //     sessionStorage.setItem(`${numeroDesafio}`, valorResultado)
+    // }
+    
+    guardarCompra(localStorage.inventario.setItem())
+    // document.querySelectorAll('input[name="objetoRadio"]').forEach((elem) => {
+    //     elem.addEventListener("change", (e) => {
+    //         let resultado = 1;
+    //         resultado = e.target.value;
+    //         guardarCompra("Desafio 1", resultado)
+    //     });
+    // });
+
+
+
+        // if(textoTienda == objetos[0].nombre && puntaje >= objetos[0].precio || textoTienda == 1 && puntaje >= objetos[0].precio){
+        //     alert(`compraste ${objetos[0].nombre}`);
+        //     puntaje -= objetos[0].precio;
+        //     console.log(puntaje);
+
+        // }else if(textoTienda == 2 && puntaje >= objetos[1].precio || textoTienda == objetos[1].nombre && puntaje >= objetos[1].precio){
+        //     alert(`compraste ${objetos[1].nombre}`);
+        //     puntaje -= objetos[1].precio;
+        //     console.log(puntaje);
+
+        // }else if(textoTienda == 1 && puntaje < objetos[0].precio || textoTienda == objetos[0].nombre && puntaje < objetos[0].precio){
+        //     alert(`No tienes suficientes puntos para comprar el ${objetos[0].nombre}`);
+        // }
+        // else if(textoTienda == 2 && puntaje < objetos[1].precio || textoTienda == objetos[1].nombre && puntaje < objetos[1].precio){
+        //     alert(`No tienes suficientes puntos para comprar el ${objetos[1].nombre}`);
+        // }
+        // else if(textoTienda == null){
+        //     alert("Saliendo de la tienda");
+            
+        // }else{
+        //     alert("Introducir el nombre exactamente con mayusculas o en cambio el numero de orden");
+        // }
     }
 
-    mostrarobjetos();
-
-    // alert("El aventurero encuentra una tienda y se adentra en ella"); 
-
-    while(loop){
-        let textoTienda = prompt(`Puntaje: ${puntaje} \n Que objetos quieres comprar con los puntos obtenidos: \n ${objetos[0].pin}- ${objetos[0].nombre} - ${objetos[0].precio}PTS - ${objetos[0].informacion}\n ${objetos[1].pin}- ${objetos[1].nombre} - ${objetos[1].precio}PTS - ${objetos[1].informacion} \n \n Elige una de los objetos \n PRESIONA CANCELAR PARA SALIR DE LA TIENDA`);
-
-        console.log(textoTienda);
-
-        if(textoTienda == objetos[0].nombre && puntaje >= objetos[0].precio || textoTienda == 1 && puntaje >= objetos[0].precio){
-            alert(`compraste ${objetos[0].nombre}`);
-            puntaje -= objetos[0].precio;
-            console.log(puntaje);
-
-        }else if(textoTienda == 2 && puntaje >= objetos[1].precio || textoTienda == objetos[1].nombre && puntaje >= objetos[1].precio){
-            alert(`compraste ${objetos[1].nombre}`);
-            puntaje -= objetos[1].precio;
-            console.log(puntaje);
-
-        }else if(textoTienda == 1 && puntaje < objetos[0].precio || textoTienda == objetos[0].nombre && puntaje < objetos[0].precio){
-            alert(`No tienes suficientes puntos para comprar el ${objetos[0].nombre}`);
-        }
-        else if(textoTienda == 2 && puntaje < objetos[1].precio || textoTienda == objetos[1].nombre && puntaje < objetos[1].precio){
-            alert(`No tienes suficientes puntos para comprar el ${objetos[1].nombre}`);
-        }
-        else if(textoTienda == null){
-            alert("Saliendo de la tienda");
-            break
-        }else{
-            alert("Introducir el nombre exactamente con mayusculas o en cambio el numero de orden");
-        }
-    }
-}
+    // tienda();
 
 // const segundoDesafio = () =>{
 //     alert("El aventurero sigue por el camino del bosque y se encuentra con un castillo enorme")
 // }
 
 const final = () =>{
-    divPrincipal.innerHTML = "<div>El aventurero al salir de la tienda se dio cuanta que ser aventurero no era lo que a el le inspiraba a seguir adelante con su vida. \n\nSe dio la vuelta y volvio para convertirse en un pescador\n\n ¡FIN!</div>"
+    divPrincipal.innerHTML = "<div><p>El aventurero al pasar despues de las adversidades se dio cuanta que ser aventurero no era lo que a el le inspiraba a seguir adelante con su vida. \n\nSe dio la vuelta y volvio para convertirse en un pescador\n\n ¡FIN!</p></div>"
 }
 
 const resultado = () => {
-    divPrincipal.innerHTML = `Estos fueron tus resultados: \nBuenas decisiones: ${buenasDecisiones} \nMalas decisiones: ${malasDecisiones}\nPuntaje Total: ${puntajeTotal}`;
+    divPrincipal.innerHTML = `<div>
+    <p>Estos fueron tus resultados: <ul>Buenas decisiones: ${buenasDecisiones} Malas decisiones: ${malasDecisiones} Puntaje Total: ${puntajeTotal}</p>
+    </div>`;
 }
 
 const comenzar = (confirmacion) => {
@@ -248,29 +330,10 @@ const muerte = () =>{
 
 const historia = () => {
     nombreAventurero();
-    primerDesafio();
     if(vidas == 0){
         muerte()
     }
     
 }
+nombreAventurero()
 
-
-// const historia = () => {
-    // comenzar();
-    // while(loop){
-    //     introduccion();
-    //     primerDesafio();
-    //     if(vidas == 0){
-    //         muerte();
-    //         resultado()
-    //         break;
-    //     }
-    //     tienda();
-    //     final();
-    //     resultado();
-    //     break;
-//     }
-// }
-
-// historia();

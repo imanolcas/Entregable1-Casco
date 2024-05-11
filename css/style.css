@@ -1,0 +1,113 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Jacquard+24+Charted&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url(https://img.freepik.com/foto-gratis/barco-abandonado-lluvioso-mar-oscuro_53876-16512.jpg?t=st=1715126446~exp=1715130046~hmac=5b6f6e4f3daeb2a7dda5c57bb602182547c1a68edd22d0385657bbd83663dabd&w=996);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Jacquard 24 Charted", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    margin: 15px;
+}
+
+.contenido{
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#principal{
+    background-image: url(../media/carta\ vieja.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 50px;
+    display: flex;
+    min-height: 77vh;
+    min-width: 47vw;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-shadow: inset -7px -11px 49px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset -7px -11px 49px -4px rgba(0,0,0,0.75);
+    box-shadow: inset -7px -11px 172px -4px rgba(0,0,0,0.75);
+    gap: 25px;
+}
+
+#seccion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+p, form{
+    text-align: center;
+    text-transform: initial;
+    letter-spacing: 2px;
+    width: 56ch;
+    font-family: "Platypi", serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    color: #000;
+}
+
+input, button{
+    background-color: transparent;
+    font-family: "Platypi", serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    text-align: center;
+    align-items: center;
+    color: #000;
+    border-color: #000;
+    border-width: 2.5px;
+    border-style: solid;
+    border-radius: 20px;
+    outline: none;
+    margin: 2px;
+    padding: 5px;
+    
+}
+
+
+ol{
+   text-align: center;
+}
+li{
+    text-transform: initial;
+    font-family: "Platypi", serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    color: #000;
+    margin: 10px;
+    width: 56ch;
+}
+
+input[type= "radio" i]{
+    color: #000;
+    background-color: #000;
+    margin: 5px;
+}
