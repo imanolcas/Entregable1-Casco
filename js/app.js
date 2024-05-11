@@ -308,7 +308,11 @@ const tienda = () => {
 // }
 
 const final = () =>{
-    divPrincipal.innerHTML = "<div><p>El aventurero al pasar despues de las adversidades se dio cuanta que ser aventurero no era lo que a el le inspiraba a seguir adelante con su vida. \n\nSe dio la vuelta y volvio para convertirse en un pescador\n\n ¡FIN!</p></div>"
+    divPrincipal.innerHTML = `<div><p>El aventurero al pasar despues de las adversidades se dio cuanta que ser aventurero no era lo que a el le inspiraba a seguir adelante con su vida. \n\nSe dio la vuelta y volvio para convertirse en un pescador\n\n ¡FIN!</p><button id="botonResultado">resultado</button></div>`
+    const botonResultado = document.getElementById("botonResultado")
+    botonResultado.addEventListener("click", ()=>{
+        resultado()
+    })
 }
 
 const resultado = () => {
