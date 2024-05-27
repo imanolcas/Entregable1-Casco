@@ -13,11 +13,20 @@ body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url(https://img.freepik.com/foto-gratis/barco-abandonado-lluvioso-mar-oscuro_53876-16512.jpg?t=st=1715126446~exp=1715130046~hmac=5b6f6e4f3daeb2a7dda5c57bb602182547c1a68edd22d0385657bbd83663dabd&w=996);
+    background-image: url(https://services.meteored.com/img/article/-por-que-el-mar-es-azul--9441-1_1280.jpg);
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center center;
+}
+
+#lampara{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    color: #000;
 }
 
 h1{
@@ -49,7 +58,7 @@ h1{
     min-width: 47vw;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     -webkit-box-shadow: inset -7px -11px 49px -4px rgba(0,0,0,0.75);
     -moz-box-shadow: inset -7px -11px 49px -4px rgba(0,0,0,0.75);
     box-shadow: inset -7px -11px 172px -4px rgba(0,0,0,0.75);
@@ -95,8 +104,10 @@ input, button{
 
 ol{
    text-align: center;
+   list-style: none;
 }
 li{
+    list-style: none;
     text-transform: initial;
     font-family: "Platypi", serif;
     font-optical-sizing: auto;
@@ -110,4 +121,15 @@ input[type= "radio" i]{
     color: #000;
     background-color: #000;
     margin: 5px;
+}
+
+#final{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#final > h3{
+    align-items: start;
 }

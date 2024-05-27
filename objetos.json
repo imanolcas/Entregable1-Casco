@@ -1,0 +1,20 @@
+[
+    {
+        "pin": 1, 
+        "nombre": "amuleto", 
+        "precio": 80, 
+        "informacion": "aumenta la cantidad de puntos obtenidos"
+    },
+    {
+        "pin": 2, 
+        "nombre": "pocion", 
+        "precio": 100, 
+        "informacion":"1HP"
+    },
+    {
+        "pin": 3, 
+        "nombre": "espada", 
+        "precio": 150, 
+        "informacion":"te permite pasar sobre los desafios donde el camino es obstruido por monstruos lv1"
+    }
+]
